@@ -96,6 +96,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': resolve(__dirname, './src'),
+			'vue': 'vue/dist/vue.esm-bundler.js'
 		},
 	},
 	server: {
@@ -105,6 +106,7 @@ export default defineConfig({
 	},
 	optimizeDeps: {
 		include: ['vue', 'vue-router', '@vueuse/core', '@vueuse/head'],
+		exclude: ['@antv/x6-vue-shape'],
 	},
 	// @ts-ignore
 	ssgOptions: {

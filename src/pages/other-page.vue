@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import useMind from '@/composable/useMind';
+import { ref } from 'vue';
 	useHead({
 		title: 'Other Pages',
 	});
+
+	const mindNode = ref();
+	useMind(mindNode);
 </script>
 
 <template>
 	<div>
 		<p>{{ $t('pages.other.desc') }}</p>
+		<div ref="mindNode"></div>
 		<router-link
 			:to="{ name: 'home' }"
 			class="
