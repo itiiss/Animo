@@ -48,7 +48,6 @@ function useMind(nodeRef: Ref) {
 			if (selectedNodes.length) {
 				const node = selectedNodes[0];
 				const type = node.prop('type');
-                console.log('tabAdd', data, JSON.parse(JSON.stringify(data)))
 				if (addChildNode(node.id, type, data)) {
                     render(graph, data);
 				}

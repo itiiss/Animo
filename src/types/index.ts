@@ -2,7 +2,6 @@ interface MindMapData {
 	id: string;
 	type: 'topic' | 'topic-branch';
 	label: string;
-    hidden?: boolean;
 	width: number;
 	height: number;
 	children?: MindMapData[];
