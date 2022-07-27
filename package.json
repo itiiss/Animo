@@ -48,7 +48,7 @@
 		"workbox-window": "^6.5.3"
 	},
 	"devDependencies": {
-		"@iconify/json": "^2.1.78",
+		"@iconify/json": "^2.1.83",
 		"@intlify/vite-plugin-vue-i18n": "^5.0.0",
 		"@vitejs/plugin-vue": "^3.0.0",
 		"@vue/compiler-sfc": "^3.2.37",
