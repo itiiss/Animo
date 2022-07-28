@@ -5,7 +5,7 @@
     <button class="absolute top-2 right-1" v-show="isHovered" @click="toggleCollapsed">
       ➖
     </button>
-    <button class="absolute bottom-6" v-show="isHovered" @click="deleteNode">✖️</button>
+    <!-- <button class="absolute bottom-6" v-show="isHovered" @click="deleteNode">✖️</button> -->
   </div>
 </template>
 
@@ -23,7 +23,7 @@ const labelText = ref(node.getData().label ?? "");
 const isHiddenSuccessor = ref(node.getData().isHiddenSuccessor ?? false);
 
 const rootNodeRef = ref();
-const isHovered = useElementHover(rootNodeRef);
+const isHovered =  useElementHover(rootNodeRef);
 
 const addChild = () => {
   const id = node?.id;

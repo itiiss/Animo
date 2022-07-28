@@ -15,5 +15,6 @@ declare module '@vue/runtime-core' {
     RootNode: typeof import('./src/components/RootNode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ToolBar: typeof import('./src/components/ToolBar.vue')['default']
   }
 }
