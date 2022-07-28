@@ -954,10 +954,10 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
-"@iconify/json@^2.1.78":
-  version "2.1.79"
-  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-2.1.79.tgz#d1ae94d678745f15b684ce948609ed80ed5d6331"
-  integrity sha512-4jCX9hRhZmJqeUQ+gTVH867FYdUvBkIZ4UYwWstHXPMIuCVsfqXy5OZn8wDIkEYfvfNy+s1m28/g4PSrWzdUtg==
+"@iconify/json@^2.1.84":
+  version "2.1.84"
+  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-2.1.84.tgz#3403d6d442ea219b566ad73a39a421212c676046"
+  integrity sha512-e/EbhMina1Pqt7JhFVPbw5iJo0TpJRiJDfVzIKoUjQiucYOVbLKP7WLir+uYF99W1pnXTA+izYETBdEXM3M0nA==
   dependencies:
     "@iconify/types" "*"
     pathe "^0.3.0"
