@@ -2,6 +2,13 @@
 import useMind from "@/composable/useMind";
 import { ref, VNode } from "vue";
 import { Graph, DataUri } from "@antv/x6";
+import exportfile from "@/assets/exportfile.svg";
+import exportpng from "@/assets/exportpng.svg";
+import fit from "@/assets/fit.svg";
+import zoomout from "@/assets/zoomin.svg";
+import zoomin from "@/assets/zoomout.svg";
+import location from "@/assets/location.svg";
+
 useHead({
   title: "Other Pages",
 });
@@ -15,20 +22,37 @@ const { zoomIn, zoomOut, zoomToFit, scrollToCenter, exportJSON, exportPNG } = us
 <template>
   <div>
     <!-- <p>{{ $t("pages.other.desc") }}</p> -->
-    <div class="flex flex-1 gap-5">
-      <button class="flex-1" @click="exportJSON">Export JSON</button>
-      <button class="flex-1" @click="exportPNG">Export PNG</button>
-      <button class="flex-1" @click="zoomToFit">Zoom To Fit</button>
-      <button class="flex-1" @click="scrollToCenter">scrollToCenter</button>
-      <button class="flex-1" @click="zoomIn">ZoomIn</button>
-      <button class="flex-1" @click="zoomOut">zoomOut</button>
-    </div>
     <div ref="mindNode"></div>
-    <router-link
+    <div class="flex absolute bottom-30 right-10 bg-base-300 rounded-md">
+      <div class="btn-group flex flex-0">
+        <button class="btn btn-ghost btn-square" @click="scrollToCenter">
+          <img :src="location" />
+        </button>
+        <button class="btn btn-ghost btn-square" @click="zoomIn">
+          <img :src="zoomin" />
+        </button>
+        <button class="btn btn-ghost btn-square" @click="zoomOut">
+          <img :src="zoomout" />
+        </button>
+        <button class="btn btn-ghost btn-square" @click="zoomToFit">
+          <img :src="fit" />
+        </button>
+      </div>
+      <div class="divider divider-horizontal m-0"></div>
+      <div class="btn-group flex flex-0">
+        <button class="btn btn-ghost btn-square" @click="exportJSON">
+          <img :src="exportfile" />
+        </button>
+        <button class="btn btn-ghost btn-square" @click="exportPNG">
+          <img :src="exportpng" />
+        </button>
+      </div>
+    </div>
+    <!-- <router-link
       :to="{ name: 'home' }"
       class="mt-5 hover:text-gray-200 dark:hover:text-gray-500 hover:underline"
       >{{ $t("pages.home") }}</router-link
-    >
+    > -->
   </div>
 </template>
 
