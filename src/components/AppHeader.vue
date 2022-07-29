@@ -1,29 +1,14 @@
 <script setup lang="ts">
 import { themes } from "@/libs/themes";
 
-defineEmits(["toggleSidebar"]);
-
 const { availableLocales, locale } = useI18n();
-
-const preferedDark = usePreferredDark();
-const isDark = useStorage("isDark", preferedDark.value);
-const body = ref<HTMLBodyElement | null>(null);
+const theme = useStorage("theme", usePreferredColorScheme().value);
 const html = ref<HTMLElement | null>(null);
 
-const toggleDarkMode = () => {
-  if (body.value) {
-    if (isDark.value) {
-      body.value.classList.remove("dark");
-    } else {
-      body.value.classList.add("dark");
-    }
-  }
-  isDark.value = !isDark.value;
-};
-
-const changeTheme = (theme: string) => {
+const changeTheme = (paramTheme: string) => {
   if (html.value) {
-    html.value.dataset.theme = theme;
+    html.value.dataset.theme = paramTheme;
+    theme.value = paramTheme;
   }
 };
 
@@ -33,11 +18,11 @@ const changeLocale = (localeParam: string) => {
 
 onMounted(async () => {
   await nextTick();
-
   html.value = document.querySelector("html") as HTMLElement;
-  body.value = document.querySelector("body") as HTMLBodyElement;
-  if (body.value) {
-    if (isDark.value) body.value.classList.add("dark");
+  if (html.value) {
+    if (theme.value) {
+      html.value.dataset.theme = theme.value;
+    }
   }
 });
 </script>
@@ -47,12 +32,8 @@ onMounted(async () => {
     <nav
       class="w-full bg-white text-gray-800 py-4 px-8 shadow-md dark:shadow-md flex items-center border-b border-gray-400/50"
     >
-      <!-- <div class="navbar bg-primary text-primary-content">
-        <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
-      </div> -->
-
       <router-link :to="{ name: 'home' }">
-        <div class="font-bold lg:text-xl md:text-lg text-md">Vitailse</div>
+        <div class="font-bold lg:text-xl md:text-lg text-md">Animo</div>
       </router-link>
       <div class="ml-auto flex items-center h-full">
         <div class="dropdown">

@@ -23,7 +23,7 @@ const { zoomIn, zoomOut, zoomToFit, scrollToCenter, exportJSON, exportPNG } = us
   <div>
     <!-- <p>{{ $t("pages.other.desc") }}</p> -->
     <div ref="mindNode"></div>
-    <div class="flex absolute bottom-30 right-10 bg-base-300 rounded-md">
+    <div class="flex fixed bottom-5 right-5 bg-base-300 rounded-md">
       <div class="btn-group flex flex-0">
         <button class="btn btn-ghost btn-square" @click="scrollToCenter">
           <img :src="location" />

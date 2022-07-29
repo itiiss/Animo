@@ -203,10 +203,12 @@ function useMind(nodeRef: Ref) {
 		render(graph, data);
 	});
 
-	// watchEffect(() => {
-	// 	console.log('effect', windowWidth.value, windowHeight.value, graphInstance.value)
-	// 	graphInstance.value?.resize(windowWidth.value, windowHeight.value);
-	// })
+	watchEffect(() => {
+		console.log('effect', windowWidth.value, windowHeight.value)
+		graphInstance.value?.resize(windowWidth.value , windowHeight.value);
+		graphInstance.value?.resizeGraph(windowWidth.value * 2, windowHeight.value *2 );
+		graphInstance.value?.scrollToContent();
+	})
 
 	return { graphInstance, exportPNG, exportJSON, zoomToFit, zoomIn, zoomOut, scrollToCenter };
 }
