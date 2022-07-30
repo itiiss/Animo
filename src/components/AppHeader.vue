@@ -71,14 +71,6 @@ onMounted(async () => {
             </li>
           </ul>
         </div>
-
-        <!-- <button class="mx-5 cursor-pointer focus:outline-none" @click="toggleDarkMode">
-          <icon:bx:bx-moon class="w-6 h-6" v-if="!isDark" />
-          <icon:bx:bxs-moon class="w-6 h-6" v-else />
-        </button>
-        <a href="https://github.com/zynth17/vitailse">
-          <icon-akar-icons:github-fill />
-        </a> -->
       </div>
     </nav>
   </header>

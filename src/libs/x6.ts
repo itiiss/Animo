@@ -89,33 +89,20 @@ const addChildNode = (id: string, type: NodeType, data: MindMapData) => {
 	const res = findItem(data, id);
 	const dataItem = res?.node;
 	if (dataItem) {
-		let item: MindMapData | null = null;
 		const length = dataItem.children ? dataItem.children.length : 0;
-		if (type === 'topic') {
-			item = {
-				id: `${id}-${length + 1}`,
-				type: 'topic-branch',
-				label: `分支主题${length + 1}`,
-				width: 100,
-				height: 40,
-			};
-		} else if (type === 'topic-branch') {
-			item = {
-				id: `${id}-${length + 1}`,
-				type: 'topic',
-				label: `子主题${length + 1}`,
-				width: 60,
-				height: 30,
-			};
-		}
-		if (item) {
-			if (dataItem.children) {
-				dataItem.children.push(item);
-			} else {
-				dataItem.children = [item];
-			}
-			return item;
-		}
+        const item = {
+            id: `${id}-${length + 1}`,
+            type: 'topic',
+            label: `child ${length + 1}`,
+            width: 100,
+            height: 40,
+        } as MindMapData;
+        if (dataItem.children) {
+            dataItem.children.push(item);
+        } else {
+            dataItem.children = [item];
+        }
+        return item;
 	}
 	return null;
 };

@@ -1,11 +1,19 @@
 import { Graph, Cell, Node, Path, Shape, DataUri } from '@antv/x6';
 import Hierarchy from '@antv/hierarchy';
-import { ref, onMounted, onUnmounted, Ref, VNode, RendererNode, RendererElement } from 'vue';
+import {
+	ref,
+	onMounted,
+	onUnmounted,
+	Ref,
+	VNode,
+	RendererNode,
+	RendererElement,
+} from 'vue';
 import { HierarchyResult, MindMapData, NodeType } from '@/types';
 import RootNode from '../components/RootNode.vue';
 import '@antv/x6-vue-shape';
 import { addChildNode, render, removeNode } from '@/libs/x6';
-import { useStore } from '@/store';
+import { ROOT_NODE_ID, useStore } from '@/store';
 
 function useMind(nodeRef: Ref) {
 	const store = useStore();
@@ -40,9 +48,9 @@ function useMind(nodeRef: Ref) {
 
 	const scrollToCenter = () => {
 		graphInstance.value.scrollToContent();
-	}
+	};
 
-	const { width : windowWidth, height : windowHeight } = useWindowSize();
+	const { width: windowWidth, height: windowHeight } = useWindowSize();
 
 	onMounted(() => {
 		const graph = new Graph({
@@ -54,11 +62,11 @@ function useMind(nodeRef: Ref) {
 				pannable: true,
 				pageVisible: true,
 				pageBreak: false,
-			  },
-			  mousewheel: {
+			},
+			mousewheel: {
 				enabled: true,
 				modifiers: ['ctrl', 'meta'],
-			  },
+			},
 			connecting: {
 				connectionPoint: 'anchor',
 			},
@@ -119,6 +127,69 @@ function useMind(nodeRef: Ref) {
 		// })
 
 		graph.on('node:mouseenter', ({ node }) => {
+			console.log('removenode', node);
+			if (node.id !== ROOT_NODE_ID) {
+				node.addTools([
+					{
+						name: 'button-remove',
+						args: {
+							x: 10,
+							y: 10,
+							onClick: () => {
+								if (
+									removeNode(node?.id, store.$state.mindMap)
+								) {
+									render(graph, store.$state.mindMap);
+								}
+							},
+						},
+					},
+					// {
+					// 	name: 'button',
+					// 	args: {
+					// 		markup: [
+					// 			{
+					// 				tagName: 'circle',
+					// 				selector: 'button',
+					// 				attrs: {
+					// 					r: 14,
+					// 					stroke: '#fe854f',
+					// 					'stroke-width': 3,
+					// 					fill: 'white',
+					// 					cursor: 'pointer',
+					// 				},
+					// 			},
+					// 			{
+					// 				tagName: 'text',
+					// 				textContent: '+',
+					// 				selector: 'icon',
+					// 				attrs: {
+					// 					fill: '#fe854f',
+					// 					'font-size': 8,
+					// 					'text-anchor': 'middle',
+					// 					'pointer-events': 'none',
+					// 					y: '0.3em',
+					// 				},
+					// 			},
+					// 		],
+					// 		x: '100%',
+					// 		y: '100%',
+					// 		offset: { x: -18, y: -18 },
+					// 		onClick() {
+					// 			if (
+					// 				addChildNode(
+					// 					node.id,
+					// 					node?.prop('type'),
+					// 					store.$state.mindMap
+					// 				)
+					// 			) {
+					// 				render(graph, store.$state.mindMap);
+					// 			}
+					// 		},
+					// 	},
+					// },
+				]);
+			}
 			// node.addTools([
 			// 	{
 			// 		name: 'button-remove',
@@ -133,64 +204,6 @@ function useMind(nodeRef: Ref) {
 			// 		},
 			// 	},
 			// ]);
-			node.addTools([
-				{
-					name: 'button-remove',
-					args: {
-						x: 10,
-						y: 10,
-						onClick: () => {
-							if (removeNode(node?.id, store.$state.mindMap)) {
-								render(graph, store.$state.mindMap);
-							}
-						},
-					},
-				},
-				// {
-				// 	name: 'button',
-				// 	args: {
-				// 		markup: [
-				// 			{
-				// 				tagName: 'circle',
-				// 				selector: 'button',
-				// 				attrs: {
-				// 					r: 14,
-				// 					stroke: '#fe854f',
-				// 					'stroke-width': 3,
-				// 					fill: 'white',
-				// 					cursor: 'pointer',
-				// 				},
-				// 			},
-				// 			{
-				// 				tagName: 'text',
-				// 				textContent: '+',
-				// 				selector: 'icon',
-				// 				attrs: {
-				// 					fill: '#fe854f',
-				// 					'font-size': 8,
-				// 					'text-anchor': 'middle',
-				// 					'pointer-events': 'none',
-				// 					y: '0.3em',
-				// 				},
-				// 			},
-				// 		],
-				// 		x: '100%',
-				// 		y: '100%',
-				// 		offset: { x: -18, y: -18 },
-				// 		onClick() {
-				// 			if (
-				// 				addChildNode(
-				// 					node.id,
-				// 					node?.prop('type'),
-				// 					store.$state.mindMap
-				// 				)
-				// 			) {
-				// 				render(graph, store.$state.mindMap);
-				// 			}
-				// 		},
-				// 	},
-				// },
-			]);
 		});
 
 		graph.on('node:mouseleave', ({ node }) => {
@@ -204,13 +217,24 @@ function useMind(nodeRef: Ref) {
 	});
 
 	watchEffect(() => {
-		console.log('effect', windowWidth.value, windowHeight.value)
-		graphInstance.value?.resize(windowWidth.value , windowHeight.value);
-		graphInstance.value?.resizeGraph(windowWidth.value * 2, windowHeight.value *2 );
+		console.log('effect', windowWidth.value, windowHeight.value);
+		graphInstance.value?.resize(windowWidth.value, windowHeight.value);
+		graphInstance.value?.resizeGraph(
+			windowWidth.value * 2,
+			windowHeight.value * 2
+		);
 		graphInstance.value?.scrollToContent();
-	})
+	});
 
-	return { graphInstance, exportPNG, exportJSON, zoomToFit, zoomIn, zoomOut, scrollToCenter };
+	return {
+		graphInstance,
+		exportPNG,
+		exportJSON,
+		zoomToFit,
+		zoomIn,
+		zoomOut,
+		scrollToCenter,
+	};
 }
 
 export default useMind;

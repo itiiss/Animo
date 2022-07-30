@@ -1,6 +1,6 @@
 interface MindMapData {
 	id: string;
-	type: 'topic' | 'topic-branch';
+	type: 'topic';
 	label: string;
 	width: number;
 	height: number;

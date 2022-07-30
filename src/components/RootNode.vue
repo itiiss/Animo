@@ -1,17 +1,11 @@
 <template>
   <div ref="rootNodeRef">
-    <!-- <input class="w-full rounded-lg" type="text" v-model="labelText" /> -->
     <input
       type="text"
       v-model="labelText"
       placeholder="Type here"
       class="input-back input-ghost input-primary w-full max-w-xs h-8 focus: border-none outline-none"
     />
-    <!-- <textarea
-      placeholder="Type here"
-      class="textarea w-full max-w-xs pt-0 focus: outline-none border-none"
-      v-model="labelText"
-    ></textarea> -->
     <button class="absolute top-0 btn-square btn-xs" v-show="isHovered" @click="addChild">
       ➕
     </button>
