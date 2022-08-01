@@ -12,7 +12,7 @@ import {
 import { HierarchyResult, MindMapData, NodeType } from '@/types';
 import RootNode from '../components/RootNode.vue';
 import '@antv/x6-vue-shape';
-import { addChildNode, render, removeNode } from '@/libs/x6';
+import { addChildNode, render, removeNode, addSiblingNode, findItem } from '@/libs/x6';
 import { ROOT_NODE_ID, useStore } from '@/store';
 
 function useMind(nodeRef: Ref) {
@@ -99,12 +99,83 @@ function useMind(nodeRef: Ref) {
 				.filter(item => item.isNode());
 			if (selectedNodes.length) {
 				const node = selectedNodes[0];
-				const type = node.prop('type');
-				if (addChildNode(node.id, type, data)) {
+				if (addChildNode(node.id, data)) {
 					render(graph, data);
 				}
 			}
 		});
+
+		graph.bindKey('enter', e => {
+			e.preventDefault();
+			const selectedNodes = graph
+				.getSelectedCells()
+				.filter(item => item.isNode());
+			if (selectedNodes.length) {
+				const node = selectedNodes[0];
+				if (addSiblingNode(node.id, data)) {
+					render(graph, data);
+				}
+			}
+		});
+
+		graph.bindKey('space', e => {
+			e.preventDefault();
+			const selectedNodes = graph
+				.getSelectedCells()
+				.filter(item => item.isNode());
+			if (selectedNodes.length) {
+				const node = selectedNodes[0];
+				store.toggleEditByID(node.id, !store.getEditByID(node.id));
+			}
+		});
+
+		// graph.bindKey('left', e => {
+		// 	e.preventDefault();
+		// 	const selectedNodes = graph
+		// 		.getSelectedCells()
+		// 		.filter(item => item.isNode());
+		// 	if (selectedNodes.length) {
+		// 		const node = selectedNodes[0];
+		// 		console.log('left')
+		// 		// store.toggleEditByID(node.id, !store.getEditByID(node.id));
+		// 	}
+		// });
+
+		// graph.bindKey('right', e => {
+		// 	e.preventDefault();
+		// 	const selectedNodes = graph
+		// 		.getSelectedCells()
+		// 		.filter(item => item.isNode());
+		// 	if (selectedNodes.length) {
+		// 		const node = selectedNodes[0];
+		// 		console.log('right')
+		// 		// store.toggleEditByID(node.id, !store.getEditByID(node.id));
+		// 	}
+		// });
+
+		// graph.bindKey('up', e => {
+		// 	e.preventDefault();
+		// 	const selectedNodes = graph
+		// 		.getSelectedCells()
+		// 		.filter(item => item.isNode());
+		// 	if (selectedNodes.length) {
+		// 		const node = selectedNodes[0];
+		// 		console.log('up')
+		// 		// store.toggleEditByID(node.id, !store.getEditByID(node.id));
+		// 	}
+		// });
+
+		// graph.bindKey('down', e => {
+		// 	e.preventDefault();
+		// 	const selectedNodes = graph
+		// 		.getSelectedCells()
+		// 		.filter(item => item.isNode());
+		// 	if (selectedNodes.length) {
+		// 		const node = selectedNodes[0];
+		// 		console.log('down')
+		// 		// store.toggleEditByID(node.id, !store.getEditByID(node.id));
+		// 	}
+		// });
 
 		// graph.on('node:mouseenter', ({ node }) => {
 		// 	console.log('mouseenter', node)
@@ -127,7 +198,6 @@ function useMind(nodeRef: Ref) {
 		// })
 
 		graph.on('node:mouseenter', ({ node }) => {
-			console.log('removenode', node);
 			if (node.id !== ROOT_NODE_ID) {
 				node.addTools([
 					{
@@ -217,7 +287,6 @@ function useMind(nodeRef: Ref) {
 	});
 
 	watchEffect(() => {
-		console.log('effect', windowWidth.value, windowHeight.value);
 		graphInstance.value?.resize(windowWidth.value, windowHeight.value);
 		graphInstance.value?.resizeGraph(
 			windowWidth.value * 2,

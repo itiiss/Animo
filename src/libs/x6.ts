@@ -85,11 +85,19 @@ const findItem = (
 	return null;
 };
 
-const addChildNode = (id: string, type: NodeType, data: MindMapData) => {
-	const res = findItem(data, id);
-	const dataItem = res?.node;
-	if (dataItem) {
-		const length = dataItem.children ? dataItem.children.length : 0;
+const traverseAndModify = (obj: MindMapData, id: string, cb: (obj: MindMapData) => void) => {
+	if (obj.id === id) {
+		cb(obj);
+	} else {
+		obj.children?.forEach((subObj: MindMapData) => {
+			traverseAndModify(subObj, id, cb);
+		})
+	}
+}
+
+const addNode = (obj: MindMapData, id: string) => {
+	if (obj) {
+		const length = obj.children ? obj.children.length : 0;
         const item = {
             id: `${id}-${length + 1}`,
             type: 'topic',
@@ -97,14 +105,29 @@ const addChildNode = (id: string, type: NodeType, data: MindMapData) => {
             width: 100,
             height: 40,
         } as MindMapData;
-        if (dataItem.children) {
-            dataItem.children.push(item);
+        if (obj.children) {
+            obj.children.push(item);
         } else {
-            dataItem.children = [item];
+            obj.children = [item];
         }
         return item;
 	}
 	return null;
+
+}
+
+const addChildNode = (id: string, data: MindMapData) => {
+	const res = findItem(data, id);
+	const dataItem = res?.node as MindMapData;
+	return addNode(dataItem, id)
+
+};
+
+const addSiblingNode = (id: string, data: MindMapData) => {
+	const res = findItem(data, id);
+	const parentId = res?.parent?.id as string;
+	const parentItem = findItem(data, parentId)?.node as MindMapData;
+	return addNode(parentItem, parentId)
 };
 
 const removeNode = (id: string, data: MindMapData) => {
@@ -212,4 +235,4 @@ const render = (graph: any, data: MindMapData) => {
 	graph.centerContent();
 };
 
-export { addChildNode, removeNode, render, toggleNodeCollapsed, findItem };
+export { addChildNode, addSiblingNode, removeNode, render, toggleNodeCollapsed, findItem, traverseAndModify };
