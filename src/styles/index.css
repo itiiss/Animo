@@ -2,13 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --tw-bg-opacity: 2
-}
-
 
 .input-back {
-    @apply input bg-primary-focus
+    @apply input bg-primary-focus;
+    margin: -8px 0px 0px 0px;
 }
 
 .input:focus {
@@ -18,5 +15,5 @@
 .input-back-disabled, .input-back[disabled] {
     @apply input bg-primary-focus;
     cursor: pointer;
-    background-color: hsl(var(--pf, var(--p)) / var(--tw-bg-opacity))
+    background-color: hsl(var(--pf, var(--p)) / 0.5)
 }

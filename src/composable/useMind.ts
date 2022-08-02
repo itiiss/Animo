@@ -1,18 +1,20 @@
-import { Graph, Cell, Node, Path, Shape, DataUri } from '@antv/x6';
+import { Graph, DataUri, View } from '@antv/x6';
 import Hierarchy from '@antv/hierarchy';
-import {
-	ref,
-	onMounted,
-	onUnmounted,
-	Ref,
-	VNode,
-	RendererNode,
-	RendererElement,
-} from 'vue';
-import { HierarchyResult, MindMapData, NodeType } from '@/types';
-import RootNode from '../components/RootNode.vue';
+import { ref, onMounted, Ref } from 'vue';
 import '@antv/x6-vue-shape';
-import { addChildNode, render, removeNode, addSiblingNode, findItem } from '@/libs/x6';
+import {
+	addChildNode,
+	render,
+	removeNode,
+	addSiblingNode,
+	traverseAndModify,
+	getParentID,
+	getChildID,
+	getPrevSiblingID,
+	getNextSiblingID,
+	findItem,
+	toggleNodeCollapsed,
+} from '@/libs/x6';
 import { ROOT_NODE_ID, useStore } from '@/store';
 
 function useMind(nodeRef: Ref) {
@@ -49,6 +51,7 @@ function useMind(nodeRef: Ref) {
 	const scrollToCenter = () => {
 		graphInstance.value.scrollToContent();
 	};
+
 
 	const { width: windowWidth, height: windowHeight } = useWindowSize();
 
@@ -125,77 +128,44 @@ function useMind(nodeRef: Ref) {
 				.filter(item => item.isNode());
 			if (selectedNodes.length) {
 				const node = selectedNodes[0];
-				store.toggleEditByID(node.id, !store.getEditByID(node.id));
+				store.modifyCurrentID(node.id);
 			}
 		});
 
-		// graph.bindKey('left', e => {
-		// 	e.preventDefault();
-		// 	const selectedNodes = graph
-		// 		.getSelectedCells()
-		// 		.filter(item => item.isNode());
-		// 	if (selectedNodes.length) {
-		// 		const node = selectedNodes[0];
-		// 		console.log('left')
-		// 		// store.toggleEditByID(node.id, !store.getEditByID(node.id));
-		// 	}
-		// });
 
-		// graph.bindKey('right', e => {
-		// 	e.preventDefault();
-		// 	const selectedNodes = graph
-		// 		.getSelectedCells()
-		// 		.filter(item => item.isNode());
-		// 	if (selectedNodes.length) {
-		// 		const node = selectedNodes[0];
-		// 		console.log('right')
-		// 		// store.toggleEditByID(node.id, !store.getEditByID(node.id));
-		// 	}
-		// });
+		graph.bindKey('left', e => {
+			e.preventDefault();
+			const currentNodeID = store.$state.currentID;
+			const parentId = getParentID(store.$state.mindMap, currentNodeID);
+			store.modifyCurrentID(parentId);
+		});
 
-		// graph.bindKey('up', e => {
-		// 	e.preventDefault();
-		// 	const selectedNodes = graph
-		// 		.getSelectedCells()
-		// 		.filter(item => item.isNode());
-		// 	if (selectedNodes.length) {
-		// 		const node = selectedNodes[0];
-		// 		console.log('up')
-		// 		// store.toggleEditByID(node.id, !store.getEditByID(node.id));
-		// 	}
-		// });
+		graph.bindKey('right', e => {
+			e.preventDefault();
+			const currentNodeID = store.$state.currentID;
+			const childID = getChildID(store.$state.mindMap, currentNodeID);
+			store.modifyCurrentID(childID);
+		});
 
-		// graph.bindKey('down', e => {
-		// 	e.preventDefault();
-		// 	const selectedNodes = graph
-		// 		.getSelectedCells()
-		// 		.filter(item => item.isNode());
-		// 	if (selectedNodes.length) {
-		// 		const node = selectedNodes[0];
-		// 		console.log('down')
-		// 		// store.toggleEditByID(node.id, !store.getEditByID(node.id));
-		// 	}
-		// });
+		graph.bindKey('up', e => {
+			e.preventDefault();
+			const currentNodeID = store.$state.currentID;
+			const preSiblingID = getPrevSiblingID(
+				store.$state.mindMap,
+				currentNodeID
+			);
+			store.modifyCurrentID(preSiblingID);
+		});
 
-		// graph.on('node:mouseenter', ({ node }) => {
-		// 	console.log('mouseenter', node)
-
-		// 	node.addTools({
-		// 		name: 'button',
-		// 		args: {
-		// 			markup: 'xxx',
-		// 			x: 0,
-		// 			y: 0,
-		// 			offset: { x: 10, y: 10 },
-		// 		},
-		// 	})
-		// })
-
-		// // 鼠标移开时删除按钮
-		// graph.on('node:mouseleave', ({ node }) => {
-
-		// 	// node.removeTools()
-		// })
+		graph.bindKey('down', e => {
+			e.preventDefault();
+			const currentNodeID = store.$state.currentID;
+			const nextSiblingID = getNextSiblingID(
+				store.$state.mindMap,
+				currentNodeID
+			);
+			store.modifyCurrentID(nextSiblingID);
+		});
 
 		graph.on('node:mouseenter', ({ node }) => {
 			if (node.id !== ROOT_NODE_ID) {
@@ -204,7 +174,7 @@ function useMind(nodeRef: Ref) {
 						name: 'button-remove',
 						args: {
 							x: 10,
-							y: 10,
+							y: 2,
 							onClick: () => {
 								if (
 									removeNode(node?.id, store.$state.mindMap)
@@ -214,73 +184,57 @@ function useMind(nodeRef: Ref) {
 							},
 						},
 					},
-					// {
-					// 	name: 'button',
-					// 	args: {
-					// 		markup: [
-					// 			{
-					// 				tagName: 'circle',
-					// 				selector: 'button',
-					// 				attrs: {
-					// 					r: 14,
-					// 					stroke: '#fe854f',
-					// 					'stroke-width': 3,
-					// 					fill: 'white',
-					// 					cursor: 'pointer',
-					// 				},
-					// 			},
-					// 			{
-					// 				tagName: 'text',
-					// 				textContent: '+',
-					// 				selector: 'icon',
-					// 				attrs: {
-					// 					fill: '#fe854f',
-					// 					'font-size': 8,
-					// 					'text-anchor': 'middle',
-					// 					'pointer-events': 'none',
-					// 					y: '0.3em',
-					// 				},
-					// 			},
-					// 		],
-					// 		x: '100%',
-					// 		y: '100%',
-					// 		offset: { x: -18, y: -18 },
-					// 		onClick() {
-					// 			if (
-					// 				addChildNode(
-					// 					node.id,
-					// 					node?.prop('type'),
-					// 					store.$state.mindMap
-					// 				)
-					// 			) {
-					// 				render(graph, store.$state.mindMap);
-					// 			}
-					// 		},
-					// 	},
-					// },
 				]);
 			}
-			// node.addTools([
-			// 	{
-			// 		name: 'button-remove',
-			// 		args: {
-			// 			x: 10,
-			// 			y: 10,
-			// 			onClick: () => {
-			// 				if (removeNode(node?.id, store.$state.mindMap)) {
-			// 					render(graph, store.$state.mindMap);
-			// 				}
-			// 			},
-			// 		},
-			// 	},
-			// ]);
+			const item = findItem(store.$state.mindMap, node.id);
+			if (item?.node?.children?.length) {
+				node.addTools([
+					{
+						name: 'button',
+						args: {
+							markup: [
+								{
+									tagName: 'circle',
+									selector: 'button',
+									attrs: {
+										r: 7,
+										stroke: '#A2B1C3',
+										'stroke-width': 1,
+										fill: '#A2B1C3',
+										cursor: 'pointer',
+									},
+								},
+								{
+									tagName: 'text',
+									textContent: '-',
+									selector: 'icon',
+									attrs: {
+										fill: 'white',
+										'font-size': 12,
+										'text-anchor': 'middle',
+										'pointer-events': 'none',
+										y: '0.3em',
+									},
+								},
+							],
+							x: '100%',
+							y: '100%',
+							offset: { x: 6, y: -14 },
+							onClick(view: View) {
+								toggleNodeCollapsed(node, graph, store.getCollapsedById(node.id));
+								store.toggleCollapsedByID(node.id, !store.getCollapsedById(node.id));
+							},
+						},
+					},
+				]);
+
+			}
 		});
 
 		graph.on('node:mouseleave', ({ node }) => {
-			// if (node.hasTool('button-remove')) {
-			// 	node.removeTool('button-remove');
-			// }
-			node.removeTools();
+			if (node.hasTool('button-remove')) {
+				node.removeTool('button-remove');
+			}
 		});
 
 		render(graph, data);

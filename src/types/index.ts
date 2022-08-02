@@ -1,6 +1,5 @@
 interface MindMapData {
 	id: string;
-	isEditing?: boolean;
 	isHiddenSuccessor?: boolean;
 	type: 'topic';
 	label: string;
