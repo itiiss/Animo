@@ -17,13 +17,9 @@ const messages = Object.fromEntries(
 	})
 );
 
-export const install: ViteSetupModule = ({ app }) => {
-	const i18n = createI18n({
-		legacy: false,
-		locale: 'en',
-		messages,
-		globalInjection: true,
-	});
-
-	app.use(i18n);
-};
+export const i18n = createI18n({
+	legacy: false,
+	locale: 'en',
+	messages,
+	globalInjection: true,
+});
