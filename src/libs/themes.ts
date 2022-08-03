@@ -1,15 +1,15 @@
 export const themes = [
     {
+      label: "🧁  cupcake",
+      value: "cupcake",
+    },
+    {
       label: "🌝  light",
       value: "light",
     },
     {
       label: "🌚  dark",
       value: " dark",
-    },
-    {
-      label: "🧁  cupcake",
-      value: "cupcake",
     },
     {
       label: "🐝  bumblebee",
