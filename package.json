@@ -1,6 +1,6 @@
 {
-	"name": "@zynth/vitailse",
-	"description": "Vite starter template with TailwindCSS",
+	"name": "@itiss/animo",
+	"description": "mindmap",
 	"version": "0.1.0",
 	"main": "src/main.ts",
 	"repository": {
@@ -21,7 +21,7 @@
 	"homepage": "https://github.com/zynth17/vitailse#readme",
 	"scripts": {
 		"dev": "vite",
-		"build": "vite-ssg build",
+		"build": "vite build",
 		"serve": "vite preview",
 		"https-preview": "serve dist"
 	},
@@ -49,7 +49,7 @@
 		"workbox-window": "^6.5.3"
 	},
 	"devDependencies": {
-		"@iconify/json": "^2.1.78",
+		"@iconify/json": "^2.1.87",
 		"@intlify/vite-plugin-vue-i18n": "^5.0.0",
 		"@vitejs/plugin-vue": "^3.0.0",
 		"@vue/compiler-sfc": "^3.2.37",
@@ -62,10 +62,8 @@
 		"unplugin-vue-components": "0.21.1",
 		"unplugin-vue-router": "^0.0.21",
 		"vite": "^3.0.0",
-		"vite-plugin-pwa": "^0.12.3",
 		"vite-plugin-vue-layouts": "^0.6.0",
 		"vite-plugin-vue-type-imports": "^0.2.0",
-		"vite-ssg": "^0.20.2",
 		"vitest": "^0.18.0",
 		"vue-tsc": "^0.38.5"
 	}
