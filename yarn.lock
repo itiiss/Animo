@@ -37,10 +37,10 @@
   dependencies:
     vue-demi "^0.7.4"
 
-"@antv/x6@1.32.7":
-  version "1.32.7"
-  resolved "https://registry.yarnpkg.com/@antv/x6/-/x6-1.32.7.tgz#52b818b68f7f2ed5c414c4be6c57dfb45f5e0816"
-  integrity sha512-WwSpULvw/mshtrvuT0AOHFyDY9kA/QKUPG6TCh4IbDIy5uYMdkVnPFihgb9rFqL+JHDLyuo4I5JIatGNveWmzw==
+"@antv/x6@1.33.0":
+  version "1.33.0"
+  resolved "https://registry.yarnpkg.com/@antv/x6/-/x6-1.33.0.tgz#613bc302bbc5eb61eef0343af9deeebfe096e8f7"
+  integrity sha512-B9KkOZJrhgjwDfwUBl58YAGcnD3lpebVaGPGxFMtLcBWmM7K6aDu+TK0CbcdoTS99OyqUQkzNI4O4RFwrw+SRA==
   dependencies:
     csstype "^3.0.3"
     jquery "^3.5.1"
