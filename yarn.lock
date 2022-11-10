@@ -54,10 +54,10 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.18.9.tgz#f2dde0c682ccc264a9a8595efd030a5cc8fd2539"
   integrity sha512-9uJveS9eY9DJ0t64YbIBZICtJy8a5QrDEVdiLCG97fVLpDTpGX7t8mMSb6OWw6Lrnjqj4O8zwjELX3dhoMgiBg==
 
-"@iconify/json@^2.1.78":
-  version "2.1.79"
-  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-2.1.79.tgz#d1ae94d678745f15b684ce948609ed80ed5d6331"
-  integrity sha512-4jCX9hRhZmJqeUQ+gTVH867FYdUvBkIZ4UYwWstHXPMIuCVsfqXy5OZn8wDIkEYfvfNy+s1m28/g4PSrWzdUtg==
+"@iconify/json@^2.1.135":
+  version "2.1.135"
+  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-2.1.135.tgz#55bf6a6930e1ec07666f849596d94512a204f0b3"
+  integrity sha512-TPcWuayPACVtr2PxMbayUU+UEpoeL9VKvc3iJ+nImmxCZvDqeO7ralHqBSZi52sf9O5lvpe6xQSQijSIr6omAw==
   dependencies:
     "@iconify/types" "*"
     pathe "^0.3.0"
