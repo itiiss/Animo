@@ -30,6 +30,19 @@
     csstype "^3.0.8"
     tslib "^2.0.3"
 
+"@antv/x6-common@^2.0.x":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@antv/x6-common/-/x6-common-2.0.4.tgz#14dcfa4266d1ea594b0029b80defb916dbe01a7f"
+  integrity sha512-OeCMJUP2/fAbGLCfUuFU/p9oSdyG/RLNpDE4xUT8pBHfhhlKfoMDz9RkYr6+ZAg8F5hgN3zBkZDuLXhO6uN8hQ==
+  dependencies:
+    lodash-es "^4.17.15"
+    utility-types "^3.10.0"
+
+"@antv/x6-geometry@^2.0.x":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@antv/x6-geometry/-/x6-geometry-2.0.4.tgz#d08213e200e16c8d065a0235189239cb367a0797"
+  integrity sha512-dlsLNRRTiCw8TsJ/03j3y5IbbbK4Npf6zBH6kAx8nnW+edNT/TAOChvPRzizwD+vA7wY9Rp2AiRnp/vCdIYC5w==
+
 "@antv/x6-vue-shape@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@antv/x6-vue-shape/-/x6-vue-shape-1.4.0.tgz#fb841fcc50c68fd1b47cd76089dedc9e9c6acc91"
@@ -37,16 +50,13 @@
   dependencies:
     vue-demi "^0.7.4"
 
-"@antv/x6@1.32.7":
-  version "1.32.7"
-  resolved "https://registry.yarnpkg.com/@antv/x6/-/x6-1.32.7.tgz#52b818b68f7f2ed5c414c4be6c57dfb45f5e0816"
-  integrity sha512-WwSpULvw/mshtrvuT0AOHFyDY9kA/QKUPG6TCh4IbDIy5uYMdkVnPFihgb9rFqL+JHDLyuo4I5JIatGNveWmzw==
+"@antv/x6@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@antv/x6/-/x6-2.1.2.tgz#9eab1a8c81bb5e288f64c0f5f8dca731d7fa03fb"
+  integrity sha512-EFFJy3Z0EFnC+J/m9LxrqCjW+OlioCIgLsa08sll3JH5PjC7PEiP2PGOJvb8cMZ1G8jgpD6odHHf9jiBNFcneQ==
   dependencies:
-    csstype "^3.0.3"
-    jquery "^3.5.1"
-    jquery-mousewheel "^3.1.13"
-    lodash-es "^4.17.15"
-    mousetrap "^1.6.5"
+    "@antv/x6-common" "^2.0.x"
+    "@antv/x6-geometry" "^2.0.x"
     utility-types "^3.10.0"
 
 "@babel/parser@^7.16.4":
@@ -779,7 +789,7 @@ csstype@^2.6.8:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.20.tgz#9229c65ea0b260cf4d3d997cb06288e36a8d6dda"
   integrity sha512-/WwNkdXfckNgw6S5R125rrW8ez139lBHWouiBvX8dfMFtcn6V81REDqnH7+CRpRipfYlyU1CmOnOxrmGcFOjeA==
 
-csstype@^3.0.3, csstype@^3.0.8:
+csstype@^3.0.8:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.0.tgz#4ddcac3718d787cf9df0d1b7d15033925c8f29f2"
   integrity sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==
@@ -1370,16 +1380,6 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
-jquery-mousewheel@^3.1.13:
-  version "3.1.13"
-  resolved "https://registry.yarnpkg.com/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz#06f0335f16e353a695e7206bf50503cb523a6ee5"
-  integrity sha512-GXhSjfOPyDemM005YCEHvzrEALhKDIswtxSHSR2e4K/suHVJKJxxRCGz3skPjNxjJjQa9AVSGGlYjv1M3VLIPg==
-
-jquery@^3.5.1:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
-  integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
-
 json5@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.1.tgz#655d50ed1e6f95ad1a3caababd2b0efda10b395c"
@@ -1553,11 +1553,6 @@ mlly@^0.5.3, mlly@^0.5.4:
   dependencies:
     pathe "^0.3.1"
     pkg-types "^0.3.3"
-
-mousetrap@^1.6.5:
-  version "1.6.5"
-  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.5.tgz#8a766d8c272b08393d5f56074e0b5ec183485bf9"
-  integrity sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==
 
 ms@2.0.0:
   version "2.0.0"
